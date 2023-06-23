@@ -6,9 +6,18 @@ import 'package:flutter/material.dart';
 import 'package:prac01ui/common/component/custom_text_form.dart';
 import 'package:prac01ui/common/const/colors.dart';
 import 'package:prac01ui/common/layout/defalut_layout.dart';
+import 'package:prac01ui/common/view/root_tab.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  String username = '';
+  String password = '';
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +58,10 @@ class LoginScreen extends StatelessWidget {
                 ),
                 CustomTextForm(
                   customHintText: '이메일을 입력해주세요',
-                  onChanged: (value) {},
+                  onChanged: (value) {
+                    // textform 내부에서 변화가 발생할 때 마다 value값이 변하고 onChanged호출
+                    username = value;
+                  },
                 ),
                 const SizedBox(
                   height: 16.0,
@@ -57,7 +69,9 @@ class LoginScreen extends StatelessWidget {
                 CustomTextForm(
                   customHintText: '비밀번호를 입력해주세요',
                   obscureText: true,
-                  onChanged: (value) {},
+                  onChanged: (value) {
+                    password = value;
+                  },
                 ),
                 const SizedBox(
                   height: 16.0,
@@ -66,7 +80,8 @@ class LoginScreen extends StatelessWidget {
                 // 버튼의 배경색이 강조됨
                 ElevatedButton(
                   onPressed: () async {
-                    const rawString = 'test@codefactory.ai:testtest';
+                    // test@codefactory.ai:testtest
+                    final rawString = '$username:$password';
 
                     // dart에서 base64로 인코딩 하는 방법
                     Codec<String, String> stringToBase64 = utf8.fuse(base64);
@@ -82,7 +97,12 @@ class LoginScreen extends StatelessWidget {
                     );
 
                     // response의 body를 확인하고자 할 때 사용
-                    print(response.data);
+                    //print(response.data);
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => const RootTab(),
+                      ),
+                    );
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: PRIMARY_COLOR,
