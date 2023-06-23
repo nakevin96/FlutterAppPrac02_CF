@@ -5,6 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:prac01ui/common/component/custom_text_form.dart';
 import 'package:prac01ui/common/const/colors.dart';
+import 'package:prac01ui/common/const/data.dart';
 import 'package:prac01ui/common/layout/defalut_layout.dart';
 import 'package:prac01ui/common/view/root_tab.dart';
 
@@ -96,8 +97,18 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     );
 
+                    final refreshToken = response.data['refreshToken'];
+                    final accessToken = response.data['accessToken'];
+
+                    // flutter secure storage를 통해 토큰 키를 저장하는 방법
+                    await storage.write(
+                        key: REFRESH_TOKEN_KEY, value: refreshToken);
+                    await storage.write(
+                        key: ACCESS_TOKEN_KEY, value: accessToken);
+
                     // response의 body를 확인하고자 할 때 사용
                     //print(response.data);
+
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (context) => const RootTab(),
