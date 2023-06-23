@@ -66,6 +66,8 @@ class CustomTextForm extends StatelessWidget {
         // 모든 상태라는 건 focus전, focus 후, disabled와 같은 모든 상태를 의미합니다.
         border: baseBorder,
 
+        enabledBorder: baseBorder,
+
         // 포커싱이 들어갔을 때 스타일링을 할 때는 focused border를 사용하면 됩니다.
         // baseBorder값을 유지한 채로 특정 값만 바꿔 사용하기 위해서는 copywith을 사용하면 됩니다.
         focusedBorder: baseBorder.copyWith(
