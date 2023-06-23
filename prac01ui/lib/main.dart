@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:prac01ui/common/component/custom_text_form.dart';
+import 'package:prac01ui/user/view/login_screen.dart';
 
 void main() {
   runApp(
@@ -13,23 +13,12 @@ class _App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            CustomTextForm(
-              customHintText: '이메일을 입력해주세요',
-              onChanged: (value) {},
-            ),
-            CustomTextForm(
-              customHintText: '비밀번호를 입력해주세요',
-              obscureText: true,
-              onChanged: (value) {},
-            )
-          ],
-        ),
+      theme: ThemeData(
+        // pubspec.yaml에 추가한 font 더하기
+        fontFamily: 'NotoSans',
       ),
+      debugShowCheckedModeBanner: false,
+      home: const LoginScreen(),
     );
   }
 }
