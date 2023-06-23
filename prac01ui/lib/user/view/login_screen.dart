@@ -1,3 +1,7 @@
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:prac01ui/common/component/custom_text_form.dart';
 import 'package:prac01ui/common/const/colors.dart';
@@ -8,6 +12,15 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Dio는 서버와 통신을 하기 위한 flutter 패키지
+    final dio = Dio();
+
+    //local host
+    const emulatorIp = '10.0.2.2:3000';
+    const simulatorIp = '127.0.0.1:3000';
+
+    final ip = Platform.isIOS ? simulatorIp : emulatorIp;
+
     return DefaultLayout(
       child: SingleChildScrollView(
         // [UI/UX] keyboardDismissBehavior에 onDrag속성을 넣으면, 화면 드래그 시 키보드가 내려갑니다.
@@ -52,7 +65,25 @@ class LoginScreen extends StatelessWidget {
                 // ElevatedButton은 버튼을 눌렀을 때 올라오는 듯한 3D효과가 탑재되어 있음
                 // 버튼의 배경색이 강조됨
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () async {
+                    const rawString = 'test@codefactory.ai:testtest';
+
+                    // dart에서 base64로 인코딩 하는 방법
+                    Codec<String, String> stringToBase64 = utf8.fuse(base64);
+                    String token = stringToBase64.encode(rawString);
+
+                    final response = await dio.post(
+                      'http://$ip/auth/login',
+                      options: Options(
+                        headers: {
+                          'authorization': 'Basic $token',
+                        },
+                      ),
+                    );
+
+                    // response의 body를 확인하고자 할 때 사용
+                    print(response.data);
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: PRIMARY_COLOR,
                   ),
