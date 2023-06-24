@@ -3,22 +3,22 @@ import 'package:prac01ui/common/const/colors.dart';
 
 class RestaurantCard extends StatelessWidget {
   final Widget restaurantImage;
-  final String restaurantName;
-  final List<String> restaurantTags;
-  final int ratingCount;
+  final String name;
+  final List<String> tags;
+  final int ratingsCount;
   final int deliveryTime;
   final int deliveryFee;
-  final double averageRating;
+  final double ratings;
 
   const RestaurantCard({
     super.key,
     required this.restaurantImage,
-    required this.restaurantName,
-    required this.restaurantTags,
-    required this.ratingCount,
+    required this.name,
+    required this.tags,
+    required this.ratingsCount,
     required this.deliveryTime,
     required this.deliveryFee,
-    required this.averageRating,
+    required this.ratings,
   });
 
   renderDot() {
@@ -52,7 +52,7 @@ class RestaurantCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              restaurantName,
+              name,
               style: const TextStyle(
                 fontSize: 16.0,
                 fontWeight: FontWeight.w500,
@@ -62,7 +62,7 @@ class RestaurantCard extends StatelessWidget {
               height: 8.0,
             ),
             Text(
-              restaurantTags.join(' ・ '),
+              tags.join(' ・ '),
               style: const TextStyle(
                 fontSize: 12.0,
                 fontWeight: FontWeight.w300,
@@ -76,12 +76,12 @@ class RestaurantCard extends StatelessWidget {
               children: [
                 _IconText(
                   icon: Icons.star,
-                  label: averageRating.toString(),
+                  label: ratings.toString(),
                 ),
                 renderDot(),
                 _IconText(
                   icon: Icons.receipt,
-                  label: ratingCount.toString(),
+                  label: ratingsCount.toString(),
                 ),
                 renderDot(),
                 _IconText(

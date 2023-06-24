@@ -31,7 +31,6 @@ class _SplashScreenState extends State<SplashScreen> {
     final dio = Dio();
     final refreshToken = await storage.read(key: REFRESH_TOKEN_KEY);
     final accessToken = await storage.read(key: ACCESS_TOKEN_KEY);
-
     try {
       final getAccessTokenResp = await dio.post(
         'http://$ip/auth/token',
@@ -39,6 +38,9 @@ class _SplashScreenState extends State<SplashScreen> {
           'authorization': 'Bearer $refreshToken',
         }),
       );
+      await storage.write(
+          key: ACCESS_TOKEN_KEY, value: getAccessTokenResp.data['accessToken']);
+
       if (!mounted) return;
       Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(builder: (_) => const RootTab()),
