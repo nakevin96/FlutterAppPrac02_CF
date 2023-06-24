@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:prac01ui/common/const/colors.dart';
 import 'package:prac01ui/common/layout/defalut_layout.dart';
+import 'package:prac01ui/restaurant/view/restaurant_screen.dart';
 
 class RootTab extends StatefulWidget {
   const RootTab({super.key});
@@ -88,14 +89,14 @@ class _RootTabState extends State<RootTab> with SingleTickerProviderStateMixin {
         ],
       ),
       child: TabBarView(
-        // physics에 NeverScrollableScrollPhysics를 붙이지 않는다면 화면을 옆으로 스크롤 하여 화면을 넘길 수 있다.
+        // physics에 NeverScrollableScrollPhysics를 붙이지 않는다면 화면을 옆으로 스크롤 하여 화면을 넘길 수 있습니다.
+        // ScrollPhysics는 Flutter의 스크롤 동작을 제어하는 물리적 규칙들의 집합입니다.
+        // Flutter 스크롤 뷰 위젯들은 스스로 스크롤 동작에 대한 물리적 특성을 가질 수 있도록 ScrollPhysics를 설정할 수 있으며
+        // 이를 통해 스크롤 동작의 속도, 감속, 경계 도달 등을 제어하는데 사용할 수 있습니다.
         physics: const NeverScrollableScrollPhysics(),
         controller: controller,
         children: const [
-          Center(
-              child: Text(
-            '홈',
-          )),
+          RestaurantScreen(),
           Center(
               child: Text(
             '음식',
