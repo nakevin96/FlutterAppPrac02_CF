@@ -1,5 +1,8 @@
 // 이 스크린은 앱에 진입해서 데이터를 긁어와 어떤 페이지를 보여줘야 하는지 정한다.
 
+import 'dart:io';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:prac01ui/common/const/colors.dart';
 import 'package:prac01ui/common/const/data.dart';
@@ -15,6 +18,8 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  // Dio는 서버와 통신을 하기 위한 flutter 패키지
+
   @override
   void initState() {
     super.initState();
@@ -23,21 +28,28 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void checkToken() async {
+    final dio = Dio();
     final refreshToken = await storage.read(key: REFRESH_TOKEN_KEY);
     final accessToken = await storage.read(key: ACCESS_TOKEN_KEY);
 
-    // async함수 내에서 buildContext를 쓰기 위해서 필요
-    // 위젯이 마운트 되지 않으면 async뒤에 context를 썼을 때 안에 아무런 값이 들어있지 않을 수도 있기 떄문
-    if (!mounted) return;
-
-    if (refreshToken == null || accessToken == null) {
-      Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(builder: (_) => const LoginScreen()),
-        (route) => false,
+    try {
+      final getAccessTokenResp = await dio.post(
+        'http://$ip/auth/token',
+        options: Options(headers: {
+          'authorization': 'Bearer $refreshToken',
+        }),
       );
-    } else {
+      if (!mounted) return;
       Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(builder: (_) => const RootTab()),
+        (route) => false,
+      );
+    } catch (e) {
+      // async함수 내에서 buildContext를 쓰기 위해서 필요
+      // 위젯이 마운트 되지 않으면 async뒤에 context를 썼을 때 안에 아무런 값이 들어있지 않을 수도 있기 떄문
+      if (!mounted) return;
+      Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (_) => const LoginScreen()),
         (route) => false,
       );
     }
