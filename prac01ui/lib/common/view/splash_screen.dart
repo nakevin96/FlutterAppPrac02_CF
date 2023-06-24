@@ -26,6 +26,10 @@ class _SplashScreenState extends State<SplashScreen> {
     final refreshToken = await storage.read(key: REFRESH_TOKEN_KEY);
     final accessToken = await storage.read(key: ACCESS_TOKEN_KEY);
 
+    // async함수 내에서 buildContext를 쓰기 위해서 필요
+    // 위젯이 마운트 되지 않으면 async뒤에 context를 썼을 때 안에 아무런 값이 들어있지 않을 수도 있기 떄문
+    if (!mounted) return;
+
     if (refreshToken == null || accessToken == null) {
       Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(builder: (_) => const LoginScreen()),

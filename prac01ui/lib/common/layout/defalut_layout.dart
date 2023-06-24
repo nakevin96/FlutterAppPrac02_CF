@@ -8,18 +8,47 @@ import 'package:flutter/material.dart';
 class DefaultLayout extends StatelessWidget {
   final Widget child;
   final Color? backgroundColor;
+  final String? title;
+  final Widget? bottomNavigationBar;
 
   const DefaultLayout({
     Key? key,
     required this.child,
     this.backgroundColor,
+    this.title,
+    this.bottomNavigationBar,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: backgroundColor ?? Colors.white,
+      appBar: renderAppBar(),
       body: child,
+      //Scaffold에서 bottomNavigationBar속성을 지정하면 아래 네비게이션 바를 만들 수 있음
+      bottomNavigationBar: bottomNavigationBar,
     );
+  }
+
+  AppBar? renderAppBar() {
+    if (title == null) {
+      return null;
+    } else {
+      return AppBar(
+        centerTitle: true,
+        backgroundColor: Colors.white,
+        // elevation은 Appbar가 앞으로 튀어나온 듯한 효과를 줌
+        elevation: 0,
+        title: Text(
+          title!,
+          style: const TextStyle(
+            fontSize: 16.0,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        // AppBar위에 올라가는 위젯들의 색상을 지정
+        foregroundColor: Colors.black,
+      );
+    }
   }
 }

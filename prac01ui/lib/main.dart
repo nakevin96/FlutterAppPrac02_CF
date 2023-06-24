@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:prac01ui/common/view/splash_screen.dart';
-import 'package:prac01ui/user/view/login_screen.dart';
 
 void main() {
   runApp(

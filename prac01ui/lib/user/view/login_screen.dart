@@ -109,6 +109,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     // response의 body를 확인하고자 할 때 사용
                     //print(response.data);
 
+                    if (!mounted) return;
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (context) => const RootTab(),
