@@ -48,20 +48,8 @@ class RestaurantScreen extends StatelessWidget {
                   final item = snapshot.data![index];
 
                   // parsed item
-                  final pItem = RestaurantModel(
-                    id: item['id'],
-                    name: item['name'],
-                    thumbUrl: item['thumbUrl'],
-                    tags: List<String>.from(item['tags']),
-                    // values를 하고 firstWhere를 하면 enum의 모든 값을 순회하며
-                    // 동일한 값을 찾는다.
-                    priceRange: RestaurantPriceRange.values.firstWhere(
-                      (element) => element.name == item['priceRange'],
-                    ),
-                    ratings: item['ratings'],
-                    ratingsCount: item['ratingsCount'],
-                    deliveryTime: item['deliveryTime'],
-                    deliveryFee: item['deliveryFee'],
+                  final pItem = RestaurantModel.fromJson(
+                    json: item,
                   );
                   return RestaurantCard(
                     restaurantImage: Image.network(
