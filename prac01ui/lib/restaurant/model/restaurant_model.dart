@@ -1,3 +1,5 @@
+import 'package:prac01ui/common/const/data.dart';
+
 enum RestaurantPriceRange {
   expensive,
   medium,
@@ -37,7 +39,7 @@ class RestaurantModel {
     return RestaurantModel(
       id: json['id'],
       name: json['name'],
-      thumbUrl: json['thumbUrl'],
+      thumbUrl: 'http://$ip${json['thumbUrl']}',
       tags: List<String>.from(json['tags']),
       // values를 하고 firstWhere를 하면 enum의 모든 값을 순회하며
       // 동일한 값을 찾는다.

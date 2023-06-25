@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:prac01ui/common/const/colors.dart';
+import 'package:prac01ui/restaurant/model/restaurant_model.dart';
 
 class RestaurantCard extends StatelessWidget {
   final Widget restaurantImage;
@@ -20,6 +21,23 @@ class RestaurantCard extends StatelessWidget {
     required this.deliveryFee,
     required this.ratings,
   });
+
+  factory RestaurantCard.fromRestaurantModel({
+    required RestaurantModel restaurantModel,
+  }) {
+    return RestaurantCard(
+      restaurantImage: Image.network(
+        restaurantModel.thumbUrl,
+        fit: BoxFit.cover,
+      ),
+      name: restaurantModel.name,
+      tags: restaurantModel.tags,
+      ratingsCount: restaurantModel.ratingsCount,
+      deliveryTime: restaurantModel.deliveryTime,
+      deliveryFee: restaurantModel.deliveryFee,
+      ratings: restaurantModel.ratings,
+    );
+  }
 
   renderDot() {
     return const Padding(

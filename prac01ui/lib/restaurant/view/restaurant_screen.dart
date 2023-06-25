@@ -51,19 +51,8 @@ class RestaurantScreen extends StatelessWidget {
                   final pItem = RestaurantModel.fromJson(
                     json: item,
                   );
-                  return RestaurantCard(
-                    restaurantImage: Image.network(
-                      'http://$ip${pItem.thumbUrl}',
-                      fit: BoxFit.cover,
-                    ),
-                    name: pItem.name,
-                    // Future로 받아오게 되면 타입이 dynamic인 상황이 있는데
-                    // 우리는 해당 타입이 String인 것을 알기 때문에 타입.from으로 바꿔주면 됩니다.
-                    tags: pItem.tags,
-                    ratingsCount: pItem.ratingsCount,
-                    deliveryTime: pItem.deliveryTime,
-                    deliveryFee: pItem.deliveryFee,
-                    ratings: pItem.ratings,
+                  return RestaurantCard.fromRestaurantModel(
+                    restaurantModel: pItem,
                   );
                 },
               );
