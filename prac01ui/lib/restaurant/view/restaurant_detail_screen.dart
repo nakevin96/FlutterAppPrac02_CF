@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:prac01ui/common/layout/defalut_layout.dart';
+import 'package:prac01ui/product/component/product_card.dart';
 import 'package:prac01ui/restaurant/component/restaurant_card.dart';
 
 class RestaurantDetailScreen extends StatelessWidget {
@@ -23,6 +24,12 @@ class RestaurantDetailScreen extends StatelessWidget {
             ratings: 5.0,
             isDetail: true,
             detail: '주르르, 고세구, 비챤',
+          ),
+          const Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: 16.0,
+            ),
+            child: ProductCard(),
           ),
         ],
       ),
