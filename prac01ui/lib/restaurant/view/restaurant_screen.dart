@@ -52,7 +52,7 @@ class RestaurantScreen extends StatelessWidget {
 
                   // parsed item
                   final pItem = RestaurantModel.fromJson(
-                    json: item,
+                    item,
                   );
                   return GestureDetector(
                     // GestureDetector를 사용하면 특정 gesture를 인식해 동작을 정의할 수 있음
