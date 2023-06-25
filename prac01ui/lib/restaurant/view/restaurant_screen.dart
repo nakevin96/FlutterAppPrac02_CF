@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:prac01ui/common/const/data.dart';
 import 'package:prac01ui/restaurant/component/restaurant_card.dart';
 import 'package:prac01ui/restaurant/model/restaurant_model.dart';
+import 'package:prac01ui/restaurant/view/restaurant_detail_screen.dart';
 
 class RestaurantScreen extends StatelessWidget {
   const RestaurantScreen({super.key});
@@ -51,8 +52,23 @@ class RestaurantScreen extends StatelessWidget {
                   final pItem = RestaurantModel.fromJson(
                     json: item,
                   );
-                  return RestaurantCard.fromRestaurantModel(
-                    restaurantModel: pItem,
+                  return GestureDetector(
+                    // GestureDetector를 사용하면 특정 gesture를 인식해 동작을 정의할 수 있음
+                    onTap: () {
+                      // Navigator.push를 통해 화면 전환이 가능
+                      // Navigator는 모든 앱 페이지를 스택 구조로 만들어 Route 객체를 관리하는 기능
+                      // context는 위치 정보를 쌓아 올리기 위해 사용
+                      Navigator.of(context).push(
+                        // Router란 앱에서 보이는 하나의 페이지나 화면을 의미
+                        MaterialPageRoute(
+                          // Flutter에서 _는 매개변수로 할 필요가 없거나 사용하지 않는다는 의미
+                          builder: (_) => const RestaurantDetailScreen(),
+                        ),
+                      );
+                    },
+                    child: RestaurantCard.fromRestaurantModel(
+                      restaurantModel: pItem,
+                    ),
                   );
                 },
               );
