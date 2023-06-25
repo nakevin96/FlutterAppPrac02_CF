@@ -1,62 +1,86 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:prac01ui/common/const/data.dart';
 import 'package:prac01ui/common/layout/defalut_layout.dart';
 import 'package:prac01ui/product/component/product_card.dart';
 import 'package:prac01ui/restaurant/component/restaurant_card.dart';
+import 'package:prac01ui/restaurant/model/restaurant_detail_model.dart';
 
 class RestaurantDetailScreen extends StatelessWidget {
+  final String id;
+
   const RestaurantDetailScreen({
+    required this.id,
     super.key,
   });
+
+  Future<Map<String, dynamic>> getRestaurantDetail() async {
+    final dio = Dio();
+    final accessToken = await storage.read(key: ACCESS_TOKEN_KEY);
+
+    final resp = await dio.get(
+      'http://$ip/restaurant/$id',
+      options: Options(
+        headers: {
+          'authorization': 'Bearer $accessToken',
+        },
+      ),
+    );
+
+    return resp.data;
+  }
 
   @override
   Widget build(BuildContext context) {
     return DefaultLayout(
       title: '이세계 아이돌',
-      child: CustomScrollView(
-        slivers: [
-          renderTop(),
-          renderLabel(),
-          renderProducts(),
-        ],
+      child: FutureBuilder<Map<String, dynamic>>(
+        future: getRestaurantDetail(),
+        builder: (
+          context,
+          AsyncSnapshot<Map<String, dynamic>> snapshot,
+        ) {
+          if (!snapshot.hasData) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          final item = RestaurantDetailModel.fromJson(json: snapshot.data!);
+          return CustomScrollView(
+            slivers: [
+              renderTop(model: item),
+              renderLabel(),
+              renderProducts(),
+            ],
+          );
+        },
       ),
-
-      // Column(
-      //   children: [
-      //     RestaurantCard(
-      //       restaurantImage: Image.asset('asset/img/food/ddeok_bok_gi.jpg'),
-      //       name: '이세돌 최고',
-      //       tags: const ['아이네', '징버거', '릴파'],
-      //       ratingsCount: 50000,
-      //       deliveryTime: 0,
-      //       deliveryFee: 0,
-      //       ratings: 5.0,
-      //       isDetail: true,
-      //       detail: '주르르, 고세구, 비챤',
-      //     ),
-      //     const Padding(
-      //       padding: EdgeInsets.symmetric(
-      //         horizontal: 16.0,
-      //       ),
-      //       child: ProductCard(),
-      //     ),
-      //   ],
-      // ),
     );
   }
 
-  SliverToBoxAdapter renderTop() {
+  SliverToBoxAdapter renderTop({
+    required RestaurantDetailModel model,
+  }) {
     return SliverToBoxAdapter(
-      child: RestaurantCard(
-        restaurantImage: Image.asset('asset/img/food/ddeok_bok_gi.jpg'),
-        name: '이세돌 최고',
-        tags: const ['아이네', '징버거', '릴파'],
-        ratingsCount: 50000,
-        deliveryTime: 0,
-        deliveryFee: 0,
-        ratings: 5.0,
+      child: RestaurantCard.fromRestaurantModel(
+        restaurantModel: model,
         isDetail: true,
-        detail: '주르르, 고세구, 비챤',
       ),
+
+      // RestaurantCard(
+      //   restaurantImage: Image.network(
+      //     item.thumbUrl,
+      //     fit: BoxFit.cover,
+      //   ),
+      //   name: item.name,
+      //   tags: item.tags,
+      //   ratingsCount: item.ratingsCount,
+      //   deliveryTime: item.deliveryTime,
+      //   deliveryFee: item.deliveryFee,
+      //   ratings: item.ratings,
+      //   isDetail: true,
+      //   detail: item.detail,
+      // ),
     );
   }
 

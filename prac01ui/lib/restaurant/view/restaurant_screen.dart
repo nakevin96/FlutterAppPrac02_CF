@@ -34,7 +34,9 @@ class RestaurantScreen extends StatelessWidget {
             future: paginateRestaurant(),
             builder: (context, AsyncSnapshot<List> snapshot) {
               if (!snapshot.hasData) {
-                return Container();
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
               }
 
               return ListView.separated(
@@ -62,7 +64,9 @@ class RestaurantScreen extends StatelessWidget {
                         // Router란 앱에서 보이는 하나의 페이지나 화면을 의미
                         MaterialPageRoute(
                           // Flutter에서 _는 매개변수로 할 필요가 없거나 사용하지 않는다는 의미
-                          builder: (_) => const RestaurantDetailScreen(),
+                          builder: (_) => RestaurantDetailScreen(
+                            id: pItem.id,
+                          ),
                         ),
                       );
                     },
