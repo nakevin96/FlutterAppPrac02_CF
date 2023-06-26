@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:prac01ui/common/const/data.dart';
+import 'package:prac01ui/common/utils/data_utils.dart';
 
 // flutter pub run build_runner build 를 입력하면 코드 생성
 // 아래처럼 .g파일 대상으로 수행
@@ -28,7 +28,7 @@ class RestaurantModel {
   // fromJson과 toJson속성이 존재하는데 각각 fromJson함수와 toJson함수를 호출할 때 사용할
   // static 함수를 넣어주면 됩니다.
   @JsonKey(
-    fromJson: pathToUrl,
+    fromJson: DataUtils.pathToUrl,
   )
   final String thumbUrl;
   final List<String> tags;
@@ -79,9 +79,4 @@ class RestaurantModel {
 
   // json_serializable 적용후 나온 toJson의 용도
   Map<String, dynamic> toJson() => _$RestaurantModelToJson(this);
-
-  // jsonKey annoation에 넣어줄 함수는 무조건 static이어야 합니다.
-  static pathToUrl(String value) {
-    return 'http://$ip$value';
-  }
 }

@@ -1,7 +1,4 @@
 // 이 스크린은 앱에 진입해서 데이터를 긁어와 어떤 페이지를 보여줘야 하는지 정한다.
-
-import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:prac01ui/common/const/colors.dart';

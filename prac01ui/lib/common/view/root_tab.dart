@@ -53,7 +53,7 @@ class _RootTabState extends State<RootTab> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return DefaultLayout(
-      title: '코팩 딜리버리',
+      title: '이세계 아이돌 최고',
       // bottom 네비게이션 바를 만드는 코드
       bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: PRIMARY_COLOR,
