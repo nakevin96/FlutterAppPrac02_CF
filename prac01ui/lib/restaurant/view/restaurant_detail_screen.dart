@@ -5,6 +5,7 @@ import 'package:prac01ui/common/layout/defalut_layout.dart';
 import 'package:prac01ui/product/component/product_card.dart';
 import 'package:prac01ui/restaurant/component/restaurant_card.dart';
 import 'package:prac01ui/restaurant/model/restaurant_detail_model.dart';
+import 'package:prac01ui/restaurant/repository/restaurant_repository.dart';
 
 class RestaurantDetailScreen extends StatelessWidget {
   final String id;
@@ -14,43 +15,61 @@ class RestaurantDetailScreen extends StatelessWidget {
     super.key,
   });
 
-  Future<Map<String, dynamic>> getRestaurantDetail() async {
+  Future<RestaurantDetailModel> getRestaurantDetail() async {
     final dio = Dio();
-    final accessToken = await storage.read(key: ACCESS_TOKEN_KEY);
 
-    final resp = await dio.get(
-      'http://$ip/restaurant/$id',
-      options: Options(
-        headers: {
-          'authorization': 'Bearer $accessToken',
-        },
-      ),
+    final repository = RestaurantRepository(
+      dio,
+      baseUrl: 'http://$ip/restaurant',
     );
 
-    return resp.data;
+    return repository.getRestaurantDetail(
+      restaurantId: id,
+    );
+
+    // // Retrofit 적용 하기 전 코드
+    // final accessToken = await storage.read(key: ACCESS_TOKEN_KEY);
+    // final resp = await dio.get(
+    //   'http://$ip/restaurant/$id',
+    //   options: Options(
+    //     headers: {
+    //       'authorization': 'Bearer $accessToken',
+    //     },
+    //   ),
+    // );
+
+    // return resp.data;
   }
 
   @override
   Widget build(BuildContext context) {
     return DefaultLayout(
       title: '이세계 아이돌',
-      child: FutureBuilder<Map<String, dynamic>>(
+      child: FutureBuilder<RestaurantDetailModel>(
         future: getRestaurantDetail(),
         builder: (
           context,
-          AsyncSnapshot<Map<String, dynamic>> snapshot,
+          AsyncSnapshot<RestaurantDetailModel> snapshot,
         ) {
+          if (snapshot.hasError) {
+            return Center(
+              child: Text(snapshot.error.toString()),
+            );
+          }
+
           if (!snapshot.hasData) {
             return const Center(
               child: CircularProgressIndicator(),
             );
           }
-          final item = RestaurantDetailModel.fromJson(snapshot.data!);
+          // retro fit 도입 이후 snapshot에 바로 RestaurantDetailModel과 매핑된
+          // 데이터가 들어오기 때문에 item이 필요가 없어짐
+          // final item = RestaurantDetailModel.fromJson(snapshot.data!);
           return CustomScrollView(
             slivers: [
-              renderTop(model: item),
+              renderTop(model: snapshot.data!),
               renderLabel(),
-              renderProducts(products: item.products),
+              renderProducts(products: snapshot.data!.products),
             ],
           );
         },
