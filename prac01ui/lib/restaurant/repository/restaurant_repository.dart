@@ -23,8 +23,7 @@ abstract class RestaurantRepository {
   // 실제로 응답을 받는 형태와 완전히 똑같은 클래스를 만들어서 넣어줘야 합니다.
   @GET('/{id}')
   @Headers({
-    'authorization':
-        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3RAY29kZWZhY3RvcnkuYWkiLCJzdWIiOiJmNTViMzJkMi00ZDY4LTRjMWUtYTNjYS1kYTlkN2QwZDkyZTUiLCJ0eXBlIjoiYWNjZXNzIiwiaWF0IjoxNjg3NzUwNjgzLCJleHAiOjE2ODc3NTA5ODN9.rl4omJurwPfFaUIcznEOpBsmEeemIJaLwUltm2zXAsk'
+    'accessToken': 'true',
   })
   Future<RestaurantDetailModel> getRestaurantDetail({
     // id라고 하는 path안에 들어가야 하는 변수를 파라미터로 대체해줍니다.
