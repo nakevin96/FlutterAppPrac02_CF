@@ -23,9 +23,12 @@ class _RestaurantRepository implements RestaurantRepository {
       {required restaurantId}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{r'accessToken': 'true'};
+    final _headers = <String, dynamic>{
+      r'authorization':
+          'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3RAY29kZWZhY3RvcnkuYWkiLCJzdWIiOiJmNTViMzJkMi00ZDY4LTRjMWUtYTNjYS1kYTlkN2QwZDkyZTUiLCJ0eXBlIjoiYWNjZXNzIiwiaWF0IjoxNjg3NzUwNjgzLCJleHAiOjE2ODc3NTA5ODN9.rl4omJurwPfFaUIcznEOpBsmEeemIJaLwUltm2zXAsk'
+    };
     _headers.removeWhere((k, v) => v == null);
-    final Map<String, dynamic>? _data = null;
+    const Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<RestaurantDetailModel>(Options(
       method: 'GET',
