@@ -4,28 +4,37 @@ import 'package:prac01ui/common/const/data.dart';
 import 'package:prac01ui/common/dio/dio.dart';
 import 'package:prac01ui/restaurant/component/restaurant_card.dart';
 import 'package:prac01ui/restaurant/model/restaurant_model.dart';
+import 'package:prac01ui/restaurant/repository/restaurant_repository.dart';
 import 'package:prac01ui/restaurant/view/restaurant_detail_screen.dart';
 
 class RestaurantScreen extends StatelessWidget {
   const RestaurantScreen({super.key});
 
-  Future<List> paginateRestaurant() async {
+  Future<List<RestaurantModel>> paginateRestaurant() async {
     final dio = Dio();
     dio.interceptors.add(
       CustomInterceptor(storage: storage),
     );
-    final accessToken = await storage.read(key: ACCESS_TOKEN_KEY);
 
-    final resp = await dio.get(
-      'http://$ip/restaurant',
-      options: Options(
-        headers: {
-          'authorization': 'Bearer $accessToken',
-        },
-      ),
-    );
+    final resp =
+        await RestaurantRepository(dio, baseUrl: 'http://$ip/restaurant')
+            .paginate();
 
-    return resp.data['data'];
+    return resp.data;
+
+    // // retrofit 적용 전
+    // final accessToken = await storage.read(key: ACCESS_TOKEN_KEY);
+
+    // final resp = await dio.get(
+    //   'http://$ip/restaurant',
+    //   options: Options(
+    //     headers: {
+    //       'authorization': 'Bearer $accessToken',
+    //     },
+    //   ),
+    // );
+
+    // return resp.data['data'];
   }
 
   @override
@@ -34,9 +43,9 @@ class RestaurantScreen extends StatelessWidget {
       child: Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: FutureBuilder<List>(
+          child: FutureBuilder<List<RestaurantModel>>(
             future: paginateRestaurant(),
-            builder: (context, AsyncSnapshot<List> snapshot) {
+            builder: (context, AsyncSnapshot<List<RestaurantModel>> snapshot) {
               if (!snapshot.hasData) {
                 return const Center(
                   child: CircularProgressIndicator(),
@@ -52,12 +61,12 @@ class RestaurantScreen extends StatelessWidget {
                 itemCount: snapshot.data!.length,
                 itemBuilder: (_, index) {
                   // itemBuilder가 실행될 때마다 item에 하나씩 담김
-                  final item = snapshot.data![index];
+                  // final item = snapshot.data![index];
 
                   // parsed item
-                  final pItem = RestaurantModel.fromJson(
-                    item,
-                  );
+                  // final pItem = RestaurantModel.fromJson(
+                  //   item,
+                  // );
                   return GestureDetector(
                     // GestureDetector를 사용하면 특정 gesture를 인식해 동작을 정의할 수 있음
                     onTap: () {
@@ -69,13 +78,15 @@ class RestaurantScreen extends StatelessWidget {
                         MaterialPageRoute(
                           // Flutter에서 _는 매개변수로 할 필요가 없거나 사용하지 않는다는 의미
                           builder: (_) => RestaurantDetailScreen(
-                            id: pItem.id,
+                            id: snapshot.data![index].id,
+                            // id: pItem.id,
                           ),
                         ),
                       );
                     },
                     child: RestaurantCard.fromRestaurantModel(
-                      restaurantModel: pItem,
+                      restaurantModel: snapshot.data![index],
+                      // restaurantModel: pItem,
                     ),
                   );
                 },
