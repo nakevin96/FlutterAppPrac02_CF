@@ -29,23 +29,41 @@ class StateProviderScreen extends ConsumerWidget {
             Text(
               provider.toString(),
             ),
-            IconButton(
-              onPressed: () {
-                ref.read(numberProvider.notifier).update((state) => state + 1);
-              },
-              icon: const Icon(
-                Icons.add_outlined,
-              ),
-            ),
-            IconButton(
-              onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                  builder: (_) => const _NextScreen(),
-                ));
-              },
-              icon: const Icon(
-                Icons.navigate_next_outlined,
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                IconButton(
+                  onPressed: () {
+                    // stateProvider state 업데이트 방법 1
+                    ref
+                        .read(numberProvider.notifier)
+                        .update((state) => state + 1);
+                  },
+                  icon: const Icon(
+                    Icons.add_outlined,
+                  ),
+                ),
+                IconButton(
+                  onPressed: () {
+                    // stateProvider state 업데이트 방법 2
+                    ref.read(numberProvider.notifier).state =
+                        ref.read(numberProvider.notifier).state - 1;
+                  },
+                  icon: const Icon(
+                    Icons.remove_outlined,
+                  ),
+                ),
+                IconButton(
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (_) => const _NextScreen(),
+                    ));
+                  },
+                  icon: const Icon(
+                    Icons.navigate_next_outlined,
+                  ),
+                ),
+              ],
             ),
           ],
         ),
@@ -80,7 +98,7 @@ class _NextScreen extends ConsumerWidget {
               icon: const Icon(
                 Icons.add_outlined,
               ),
-            )
+            ),
           ],
         ),
       ),
