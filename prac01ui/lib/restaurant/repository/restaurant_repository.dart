@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart' hide Headers;
+import 'package:prac01ui/common/model/cursor_pagination_model.dart';
 import 'package:prac01ui/restaurant/model/restaurant_detail_model.dart';
+import 'package:prac01ui/restaurant/model/restaurant_model.dart';
 import 'package:retrofit/retrofit.dart';
 
 part 'restaurant_repository.g.dart';
@@ -13,9 +15,12 @@ abstract class RestaurantRepository {
   factory RestaurantRepository(Dio dio, {String baseUrl}) =
       _RestaurantRepository;
 
-  // // http://$ip/restaurant/
-  // @GET('/')
-  // paginate();
+  // http://$ip/restaurant/
+  @GET('/')
+  @Headers({
+    'accessToken': 'true',
+  })
+  Future<CursorPagination<RestaurantModel>> paginate();
 
   // retrofit에서는 :id가 아니라 {id}로 변수를 사용합니다.
   // http://$ip/restaurant/:id

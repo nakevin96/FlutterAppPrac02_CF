@@ -50,7 +50,6 @@ class CustomInterceptor extends Interceptor {
   }
 
   // 2) 응답을 받았을 때
-  // TODO
 
   // 3) 에러가 났을 때
   @override
