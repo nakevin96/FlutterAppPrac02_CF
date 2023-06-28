@@ -76,3 +76,21 @@ int gFamilyStateMultifly(
 }) {
   return number1 * number2;
 }
+
+// 이제 stateNotifierProvider를 code generation을 이용해 만들어 봅시다.
+@riverpod
+class GStateNotifier extends _$GStateNotifier {
+  // 필수: 초기상태 지정
+  @override
+  int build() {
+    return 0;
+  }
+
+  increment() {
+    state++;
+  }
+
+  decrement() {
+    state--;
+  }
+}
