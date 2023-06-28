@@ -8,7 +8,7 @@ class FutureProviderScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(multiplesFutureProvider);
+    final AsyncValue state = ref.watch(multiplesFutureProvider);
 
     return DefaultLayout(
       title: 'FutureProviderScreen',
@@ -17,6 +17,7 @@ class FutureProviderScreen extends ConsumerWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            // AsyncValue에는 when이라는 함수 존재. 분기 처리 가능
             // data는 로딩이 끝나서 데이터가 있을 때
             // error는 에러가 발생했을 때
             // loading은 로딩 중일 때 실행할 함수
