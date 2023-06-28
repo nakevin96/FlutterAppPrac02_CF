@@ -1,6 +1,7 @@
 # prac02riverpod
 
-## Intro
+## Intro  
+[관련 커밋으로 이동](https://github.com/nakevin96/FlutterAppPrac02_CF/commit/e557e6a6a6a53299a836d8baf05011268853955d)
 
 ---
 
@@ -13,7 +14,7 @@ RiverPod을 공부하기 위한 프로젝트 입니다.
 `setState`만 사용을 하게 되면  
 **스크린과 스크린 사이에서 데이터를 넘겨줄 때** 문제가 있을 수 있습니다.
 
-설치는 pub.dev에서 flutter riverpod을 검색 한 후 설치하시면 됩니다 [이동](https://pub.dev/packages/flutter_riverpod/install)
+설치는 pub.dev에서 flutter riverpod을 검색 한 후 설치하시면 됩니다 [설치하러 가기](https://pub.dev/packages/flutter_riverpod/install)
 
 <br/>
 <br/>
@@ -36,27 +37,31 @@ Service, 계산 값들을 반환할 때 주로 사용됩니다.
 또한 여러 Provier 값들을 묶어 한번에 반환 값을 만들 수 있습니다.  
 (_Provider 안에 다른 Provider를 넣는게 가능합니다_)
 
-### ■ StateProvider
+### ■ StateProvider  
+[관련 커밋으로 이동](https://github.com/nakevin96/FlutterAppPrac02_CF/commit/62c1db8deb0bbecbf0111191c35aabba2397b8e5)  
 
 UI에서 "**직접적으로**" 데이터를 변경할 수 있게 하고 싶을 때 사용됩니다.  
 단순한 형태의 데이터(int, double, String..)만 관리하며  
 Class, Map, List등  
 <u>복잡한 형태의 데이터와 복잡한 로직/u>은 다루지 않습니다.</u>
 
-### ■ StateNotifierProvider
+### ■ StateNotifierProvider  
+[관련 커밋으로 이동](https://github.com/nakevin96/FlutterAppPrac02_CF/commit/7c0212f4a28471b1e207601bd3a108e719ce4508)  
 
 `StateProvider`와 "**직접적으로**" 데이터를 변경하고자 할 때 사용한다는 것은 유사합니다.
 
 하지만 `StateNotifierProvider`의 경우 **복잡한 데이터**도 관리를 할 수 있습니다.
 
-### ■ FutureProvider
+### ■ FutureProvider  
+[관련 커밋으로 이동](https://github.com/nakevin96/FlutterAppPrac02_CF/commit/d17f697b67d6341410b9943fe20834c9c0c76981)  
 
 Future 타입만 반환이 가능합니다.  
 API 요청의 결과를 반환할 때 자주 사용합니다.  
 단점은 복잡한 로직 또는 사용자의 특정 행동 뒤에
 Future를 재실행 하는 기능이 없다는 것 입니다.
 
-### ■ StreamProvider
+### ■ StreamProvider  
+[관련 커밋으로 이동](https://github.com/nakevin96/FlutterAppPrac02_CF/commit/db11c858272a4997c259c91cde4aea68c8a9ed9b)  
 
 `FutureProvider`와 유사한 provider로 주로 socket과 같은 것을 사용하여  
 API 요청 결과를 Stream으로 반환할 때 주로 사용합니다.
@@ -77,7 +82,8 @@ API 요청 결과를 Stream으로 반환할 때 주로 사용합니다.
 
 ---
 
-## Listen 함수
+## Listen 함수  
+[관련 커밋으로 이동](https://github.com/nakevin96/FlutterAppPrac02_CF/commit/880834cca7f0366ded1ce6a58cebaf71c74e15ad)  
 
 어떤 event내에서 한 번만 실행되기를 원할 때는 `ref.read`를 쓰고,  
 Screen 내에서 지속적으로 state를 관찰하다가 state에 변화가 발생했을 때
@@ -97,7 +103,8 @@ build함수 내에서 사용을 해도 중복되어 실행되지 않게 내부�
 
 ---
 
-## Select
+## Select  
+[관련 커밋으로 이동](https://github.com/nakevin96/FlutterAppPrac02_CF/commit/0fe0cfe107c42919c9ea04d7136e9ec12aca7201)  
 
 이번에는 `listen`을 하던 `watch`를 하던 특정 속성이 변경되었을 때만 빌드를 재실행 하는 기능입니다.  
 이 부분은 '최적화'와 연관되어 있습니다.
