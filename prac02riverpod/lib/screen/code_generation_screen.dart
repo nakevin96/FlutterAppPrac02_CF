@@ -57,6 +57,13 @@ class CodeGenerationScreen extends ConsumerWidget {
                 Icons.remove,
               ),
             ),
+            // invalidate() 유효하지 않게 만들기
+            ElevatedButton(
+              onPressed: () {
+                ref.invalidate(gStateNotifierProvider);
+              },
+              child: const Text('Invalidate'),
+            )
           ],
         ),
       ),
