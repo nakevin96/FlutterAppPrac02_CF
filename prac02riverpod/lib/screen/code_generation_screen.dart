@@ -14,6 +14,10 @@ class CodeGenerationScreen extends ConsumerWidget {
     final state2 = ref.watch(gIntStateProvider);
     final state3 = ref.watch(gIntFutureStateProvider);
     final state4 = ref.watch(gIntFutureState2Provider);
+    final state5 = ref.watch(gFamilyStateMultiflyProvider(
+      number1: 4,
+      number2: 4,
+    ));
 
     return DefaultLayout(
       title: 'CodeGenerationScreen',
@@ -34,6 +38,7 @@ class CodeGenerationScreen extends ConsumerWidget {
               error: (err, stack) => Text(err.toString()),
               loading: () => const CircularProgressIndicator(),
             ),
+            Text(state5.toString()),
             IconButton(
               onPressed: () {},
               icon: const Icon(

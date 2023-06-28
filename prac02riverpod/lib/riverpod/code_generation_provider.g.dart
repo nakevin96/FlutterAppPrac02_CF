@@ -64,4 +64,117 @@ final gIntFutureState2Provider = FutureProvider<int>.internal(
 );
 
 typedef GIntFutureState2Ref = FutureProviderRef<int>;
+String _$gFamilyStateMultiflyHash() =>
+    r'5a71b01483169f75b2cf53953274214a8d02d5c2';
+
+/// Copied from Dart SDK
+class _SystemHash {
+  _SystemHash._();
+
+  static int combine(int hash, int value) {
+    // ignore: parameter_assignments
+    hash = 0x1fffffff & (hash + value);
+    // ignore: parameter_assignments
+    hash = 0x1fffffff & (hash + ((0x0007ffff & hash) << 10));
+    return hash ^ (hash >> 6);
+  }
+
+  static int finish(int hash) {
+    // ignore: parameter_assignments
+    hash = 0x1fffffff & (hash + ((0x03ffffff & hash) << 3));
+    // ignore: parameter_assignments
+    hash = hash ^ (hash >> 11);
+    return 0x1fffffff & (hash + ((0x00003fff & hash) << 15));
+  }
+}
+
+typedef GFamilyStateMultiflyRef = AutoDisposeProviderRef<int>;
+
+/// See also [gFamilyStateMultifly].
+@ProviderFor(gFamilyStateMultifly)
+const gFamilyStateMultiflyProvider = GFamilyStateMultiflyFamily();
+
+/// See also [gFamilyStateMultifly].
+class GFamilyStateMultiflyFamily extends Family<int> {
+  /// See also [gFamilyStateMultifly].
+  const GFamilyStateMultiflyFamily();
+
+  /// See also [gFamilyStateMultifly].
+  GFamilyStateMultiflyProvider call({
+    required int number1,
+    required int number2,
+  }) {
+    return GFamilyStateMultiflyProvider(
+      number1: number1,
+      number2: number2,
+    );
+  }
+
+  @override
+  GFamilyStateMultiflyProvider getProviderOverride(
+    covariant GFamilyStateMultiflyProvider provider,
+  ) {
+    return call(
+      number1: provider.number1,
+      number2: provider.number2,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'gFamilyStateMultiflyProvider';
+}
+
+/// See also [gFamilyStateMultifly].
+class GFamilyStateMultiflyProvider extends AutoDisposeProvider<int> {
+  /// See also [gFamilyStateMultifly].
+  GFamilyStateMultiflyProvider({
+    required this.number1,
+    required this.number2,
+  }) : super.internal(
+          (ref) => gFamilyStateMultifly(
+            ref,
+            number1: number1,
+            number2: number2,
+          ),
+          from: gFamilyStateMultiflyProvider,
+          name: r'gFamilyStateMultiflyProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$gFamilyStateMultiflyHash,
+          dependencies: GFamilyStateMultiflyFamily._dependencies,
+          allTransitiveDependencies:
+              GFamilyStateMultiflyFamily._allTransitiveDependencies,
+        );
+
+  final int number1;
+  final int number2;
+
+  @override
+  bool operator ==(Object other) {
+    return other is GFamilyStateMultiflyProvider &&
+        other.number1 == number1 &&
+        other.number2 == number2;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, number1.hashCode);
+    hash = _SystemHash.combine(hash, number2.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
 // ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions

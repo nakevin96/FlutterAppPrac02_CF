@@ -47,3 +47,32 @@ Future<int> gIntFutureState2(GIntFutureState2Ref ref) async {
 
   return 11;
 }
+
+// 2) Family 파라미터를 일반 함수 처럼 사용할 수 있게 하자
+
+// 그 전에 기존에 어떻게 선언했는지 봅시다
+// family에는 하나의 값만 넣어 줄 수 있기 때문에 따로 class를 만들어줘야 합니다.
+class _TestParameter {
+  final int number1;
+  final int number2;
+
+  _TestParameter({
+    required this.number1,
+    required this.number2,
+  });
+}
+
+final _testFamilyProvider = Provider.family<int, _TestParameter>(
+  (ref, numClassInstance) =>
+      numClassInstance.number1 * numClassInstance.number2,
+);
+
+// 이제 코드 제네레이션을 이용해 봅시다.
+@riverpod
+int gFamilyStateMultifly(
+  GFamilyStateMultiflyRef ref, {
+  required int number1,
+  required int number2,
+}) {
+  return number1 * number2;
+}
