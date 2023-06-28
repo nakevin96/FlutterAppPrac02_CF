@@ -12,6 +12,8 @@ class CodeGenerationScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final state1 = ref.watch(gStringStateProvider);
     final state2 = ref.watch(gIntStateProvider);
+    final state3 = ref.watch(gIntFutureStateProvider);
+    final state4 = ref.watch(gIntFutureState2Provider);
 
     return DefaultLayout(
       title: 'CodeGenerationScreen',
@@ -22,6 +24,16 @@ class CodeGenerationScreen extends ConsumerWidget {
           children: [
             Text(state1),
             Text(state2.toString()),
+            state3.when(
+              data: (data) => Text(data.toString()),
+              error: (err, stack) => Text(err.toString()),
+              loading: () => const CircularProgressIndicator(),
+            ),
+            state4.when(
+              data: (data) => Text(data.toString()),
+              error: (err, stack) => Text(err.toString()),
+              loading: () => const CircularProgressIndicator(),
+            ),
             IconButton(
               onPressed: () {},
               icon: const Icon(

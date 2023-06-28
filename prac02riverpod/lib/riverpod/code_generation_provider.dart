@@ -27,3 +27,23 @@ String gStringState(GStringStateRef ref) {
 int gIntState(GIntStateRef ref) {
   return 0;
 }
+
+@riverpod
+Future<int> gIntFutureState(GIntFutureStateRef ref) async {
+  await Future.delayed(const Duration(seconds: 2));
+
+  return 10;
+}
+
+// 일반적으로 @riverpod으로 생성하면 autoDispose가 자동으로 붙습니다.
+// 만약 일반 provider로 하고 싶다면 아래와 같이 하면 됩니다.
+// keepAlive는 기본 값이 false, 입니다. 즉 살려두지 말고 autoDispose하라는 뜻이죠
+// 이 값을 true로 바꿔준다면 autoDispose가 없는 Provider를 받을 수 있습니다.
+@Riverpod(
+  keepAlive: true,
+)
+Future<int> gIntFutureState2(GIntFutureState2Ref ref) async {
+  await Future.delayed(const Duration(seconds: 2));
+
+  return 11;
+}
