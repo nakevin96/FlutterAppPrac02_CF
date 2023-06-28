@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:prac02riverpod/layout/default_layout.dart';
+import 'package:prac02riverpod/screen/family_modifer_screen.dart';
 import 'package:prac02riverpod/screen/future_provider_screen.dart';
 import 'package:prac02riverpod/screen/state_notifier_provider_screen.dart';
 import 'package:prac02riverpod/screen/state_provider_screen.dart';
@@ -53,6 +54,16 @@ class HomeScreen extends StatelessWidget {
               );
             },
             child: const Text('StreamProviderScreen'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (_) => const FamilyModifierScreen(),
+                ),
+              );
+            },
+            child: const Text('FamilyModifierScreen'),
           ),
         ],
       ),
