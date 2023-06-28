@@ -65,6 +65,8 @@ API 요청 결과를 Stream으로 반환할 때 주로 사용합니다.
 
 사용을 안하고 Provider에서 Riverpod으로 마이그레이션 하는 용도입니다.
 
+---
+
 ## `ref.read` vs `ref.watch`
 
 `ref.watch`는 반환값의 업데이트가 있을 때 지속적으로 build를 재실행합니다.  
@@ -72,3 +74,23 @@ API 요청 결과를 Stream으로 반환할 때 주로 사용합니다.
 
 `ref.read`는 실행되는 순간 **단 한번만** provider 값을 가져옵니다.  
 `onPressed`의 콜백처럼 <u>특정 액션 뒤에 실행되는 함수 내부에서 주로 사용</u>됩니다.
+
+---
+
+## Listen 함수
+
+어떤 event내에서 한 번만 실행되기를 원할 때는 `ref.read`를 쓰고,  
+Screen 내에서 지속적으로 state를 관찰하다가 state에 변화가 발생했을 때
+업데이트 해주기 위해 `ref.watch`를 사용했습니다.
+
+그럼 `ref.listen`은 언제 쓸까요?
+
+**listen** 이라는 것은 일반적으로  
+무언가 값이 변경이 되고, 변경된 값을 활용하여 특정 함수를 동작시키고 싶을 때 사용합니다.
+
+provider에서도 이런 것이 가능합니다.  
+상세 내용은 Listen관련 commit을 확인해주세요
+
+++ riverpod에서 제공해주는 `ref.listen`의 경우  
+dispose를 따로 해줄 필요가 없습니다.  
+build함수 내에서 사용을 해도 중복되어 실행되지 않게 내부적으로 설계되어있기 때문에 자유롭게 사용하면 됩니다.
