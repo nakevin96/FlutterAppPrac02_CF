@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:prac01ui/common/const/data.dart';
-import 'package:prac01ui/common/dio/dio.dart';
+import 'package:prac01ui/common/model/cursor_pagination_model.dart';
 import 'package:prac01ui/restaurant/component/restaurant_card.dart';
 import 'package:prac01ui/restaurant/model/restaurant_model.dart';
 import 'package:prac01ui/restaurant/repository/restaurant_repository.dart';
@@ -10,33 +9,33 @@ import 'package:prac01ui/restaurant/view/restaurant_detail_screen.dart';
 class RestaurantScreen extends ConsumerWidget {
   const RestaurantScreen({super.key});
 
-  Future<List<RestaurantModel>> paginateRestaurant(WidgetRef ref) async {
-    // final dio = Dio();
-    // dio.interceptors.add(
-    //   CustomInterceptor(storage: storage),
-    // );
-    final dio = ref.watch(dioProvider);
+  // Future<List<RestaurantModel>> paginateRestaurant(WidgetRef ref) async {
+  //   // final dio = Dio();
+  //   // dio.interceptors.add(
+  //   //   CustomInterceptor(storage: storage),
+  //   // );
+  //   final dio = ref.watch(dioProvider);
 
-    final resp =
-        await RestaurantRepository(dio, baseUrl: 'http://$ip/restaurant')
-            .paginate();
+  //   final resp =
+  //       await RestaurantRepository(dio, baseUrl: 'http://$ip/restaurant')
+  //           .paginate();
 
-    return resp.data;
+  //   return resp.data;
 
-    // // retrofit 적용 전
-    // final accessToken = await storage.read(key: ACCESS_TOKEN_KEY);
+  //   // // retrofit 적용 전
+  //   // final accessToken = await storage.read(key: ACCESS_TOKEN_KEY);
 
-    // final resp = await dio.get(
-    //   'http://$ip/restaurant',
-    //   options: Options(
-    //     headers: {
-    //       'authorization': 'Bearer $accessToken',
-    //     },
-    //   ),
-    // );
+  //   // final resp = await dio.get(
+  //   //   'http://$ip/restaurant',
+  //   //   options: Options(
+  //   //     headers: {
+  //   //       'authorization': 'Bearer $accessToken',
+  //   //     },
+  //   //   ),
+  //   // );
 
-    // return resp.data['data'];
-  }
+  //   // return resp.data['data'];
+  // }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -44,9 +43,11 @@ class RestaurantScreen extends ConsumerWidget {
       child: Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: FutureBuilder<List<RestaurantModel>>(
-            future: paginateRestaurant(ref),
-            builder: (context, AsyncSnapshot<List<RestaurantModel>> snapshot) {
+          child: FutureBuilder<CursorPagination<RestaurantModel>>(
+            // future: paginateRestaurant(ref),
+            future: ref.watch(restaurantRepositoryProvider).paginate(),
+            builder: (context,
+                AsyncSnapshot<CursorPagination<RestaurantModel>> snapshot) {
               if (!snapshot.hasData) {
                 return const Center(
                   child: CircularProgressIndicator(),
@@ -59,7 +60,7 @@ class RestaurantScreen extends ConsumerWidget {
                     height: 16.0,
                   );
                 },
-                itemCount: snapshot.data!.length,
+                itemCount: snapshot.data!.data.length,
                 itemBuilder: (_, index) {
                   // itemBuilder가 실행될 때마다 item에 하나씩 담김
                   // final item = snapshot.data![index];
@@ -79,14 +80,14 @@ class RestaurantScreen extends ConsumerWidget {
                         MaterialPageRoute(
                           // Flutter에서 _는 매개변수로 할 필요가 없거나 사용하지 않는다는 의미
                           builder: (_) => RestaurantDetailScreen(
-                            id: snapshot.data![index].id,
+                            id: snapshot.data!.data[index].id,
                             // id: pItem.id,
                           ),
                         ),
                       );
                     },
                     child: RestaurantCard.fromRestaurantModel(
-                      restaurantModel: snapshot.data![index],
+                      restaurantModel: snapshot.data!.data[index],
                       // restaurantModel: pItem,
                     ),
                   );

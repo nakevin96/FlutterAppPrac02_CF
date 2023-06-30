@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:prac01ui/common/const/data.dart';
-import 'package:prac01ui/common/dio/dio.dart';
 import 'package:prac01ui/common/layout/defalut_layout.dart';
 import 'package:prac01ui/product/component/product_card.dart';
 import 'package:prac01ui/restaurant/component/restaurant_card.dart';
@@ -16,46 +14,44 @@ class RestaurantDetailScreen extends ConsumerWidget {
     super.key,
   });
 
-  Future<RestaurantDetailModel> getRestaurantDetail(WidgetRef ref) async {
-    // final dio = Dio();
+  // Future<RestaurantDetailModel> getRestaurantDetail(WidgetRef ref) async {
+  // final dio = Dio();
 
-    // // dio에 인터셉터 추가
-    // dio.interceptors.add(
-    //   CustomInterceptor(
-    //     storage: storage,
-    //   ),
-    // );
-    final dio = ref.watch(dioProvider);
+  // // dio에 인터셉터 추가
+  // dio.interceptors.add(
+  //   CustomInterceptor(
+  //     storage: storage,
+  //   ),
+  // );
+  // final dio = ref.read(dioProvider);
 
-    final repository = RestaurantRepository(
-      dio,
-      baseUrl: 'http://$ip/restaurant',
-    );
+  // final repository = RestaurantRepository(
+  //   dio,
+  //   baseUrl: 'http://$ip/restaurant',
+  // );
 
-    return repository.getRestaurantDetail(
-      restaurantId: id,
-    );
+  // // Retrofit 적용 하기 전 코드
+  // final accessToken = await storage.read(key: ACCESS_TOKEN_KEY);
+  // final resp = await dio.get(
+  //   'http://$ip/restaurant/$id',
+  //   options: Options(
+  //     headers: {
+  //       'authorization': 'Bearer $accessToken',
+  //     },
+  //   ),
+  // );
 
-    // // Retrofit 적용 하기 전 코드
-    // final accessToken = await storage.read(key: ACCESS_TOKEN_KEY);
-    // final resp = await dio.get(
-    //   'http://$ip/restaurant/$id',
-    //   options: Options(
-    //     headers: {
-    //       'authorization': 'Bearer $accessToken',
-    //     },
-    //   ),
-    // );
-
-    // return resp.data;
-  }
+  // return resp.data;
+  // }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return DefaultLayout(
       title: '이세계 아이돌',
       child: FutureBuilder<RestaurantDetailModel>(
-        future: getRestaurantDetail(ref),
+        future: ref
+            .watch(restaurantRepositoryProvider)
+            .getRestaurantDetail(restaurantId: id),
         builder: (
           context,
           AsyncSnapshot<RestaurantDetailModel> snapshot,
