@@ -1,5 +1,5 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:prac01ui/common/const/data.dart';
 import 'package:prac01ui/common/dio/dio.dart';
 import 'package:prac01ui/common/layout/defalut_layout.dart';
@@ -8,7 +8,7 @@ import 'package:prac01ui/restaurant/component/restaurant_card.dart';
 import 'package:prac01ui/restaurant/model/restaurant_detail_model.dart';
 import 'package:prac01ui/restaurant/repository/restaurant_repository.dart';
 
-class RestaurantDetailScreen extends StatelessWidget {
+class RestaurantDetailScreen extends ConsumerWidget {
   final String id;
 
   const RestaurantDetailScreen({
@@ -16,15 +16,16 @@ class RestaurantDetailScreen extends StatelessWidget {
     super.key,
   });
 
-  Future<RestaurantDetailModel> getRestaurantDetail() async {
-    final dio = Dio();
+  Future<RestaurantDetailModel> getRestaurantDetail(WidgetRef ref) async {
+    // final dio = Dio();
 
-    // dio에 인터셉터 추가
-    dio.interceptors.add(
-      CustomInterceptor(
-        storage: storage,
-      ),
-    );
+    // // dio에 인터셉터 추가
+    // dio.interceptors.add(
+    //   CustomInterceptor(
+    //     storage: storage,
+    //   ),
+    // );
+    final dio = ref.watch(dioProvider);
 
     final repository = RestaurantRepository(
       dio,
@@ -50,11 +51,11 @@ class RestaurantDetailScreen extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return DefaultLayout(
       title: '이세계 아이돌',
       child: FutureBuilder<RestaurantDetailModel>(
-        future: getRestaurantDetail(),
+        future: getRestaurantDetail(ref),
         builder: (
           context,
           AsyncSnapshot<RestaurantDetailModel> snapshot,

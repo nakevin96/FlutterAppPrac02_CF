@@ -1,20 +1,23 @@
 // 이 스크린은 앱에 진입해서 데이터를 긁어와 어떤 페이지를 보여줘야 하는지 정한다.
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:prac01ui/common/const/colors.dart';
 import 'package:prac01ui/common/const/data.dart';
+import 'package:prac01ui/common/dio/dio.dart';
 import 'package:prac01ui/common/layout/defalut_layout.dart';
+import 'package:prac01ui/common/secure_storage/secure_storage.dart';
 import 'package:prac01ui/common/view/root_tab.dart';
 import 'package:prac01ui/user/view/login_screen.dart';
 
-class SplashScreen extends StatefulWidget {
+class SplashScreen extends ConsumerStatefulWidget {
   const SplashScreen({super.key});
 
   @override
-  State<SplashScreen> createState() => _SplashScreenState();
+  ConsumerState<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
+class _SplashScreenState extends ConsumerState<SplashScreen> {
   // Dio는 서버와 통신을 하기 위한 flutter 패키지
 
   @override
@@ -25,7 +28,9 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void checkToken() async {
-    final dio = Dio();
+    // final dio = Dio();
+    final dio = ref.read(dioProvider);
+    final storage = ref.read(secureStorageProvider);
     final refreshToken = await storage.read(key: REFRESH_TOKEN_KEY);
     final accessToken = await storage.read(key: ACCESS_TOKEN_KEY);
     try {

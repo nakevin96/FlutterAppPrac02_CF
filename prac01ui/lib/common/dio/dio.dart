@@ -1,6 +1,22 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:prac01ui/common/const/data.dart';
+import 'package:prac01ui/common/secure_storage/secure_storage.dart';
+
+// provider를 따로 폴더를 만들어서 관리해도 되지만
+// 일반적인 dependency(캐싱을 따로 로직 안에서 하지 않아도 되는 경우)
+// 관련된 변수, 클래스가 있는 곳에 선언하는 것도 편합니다.
+final dioProvider = Provider<Dio>((ref) {
+  final dio = Dio();
+  final storage = ref.watch(secureStorageProvider);
+
+  dio.interceptors.add(
+    CustomInterceptor(storage: storage),
+  );
+
+  return dio;
+});
 
 class CustomInterceptor extends Interceptor {
 // dio는 많은 기능들을 제공하며 intercept 기능은 매우 유용하다고 할 수 있습니다.
