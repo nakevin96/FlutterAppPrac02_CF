@@ -47,7 +47,7 @@ class CursorPaginationMeta {
 }
 
 // listview에서 새로고침 기능 구현시 사용
-class CursorPaginationRefetching extends CursorPagination {
+class CursorPaginationRefetching<T> extends CursorPagination<T> {
   CursorPaginationRefetching({
     required super.meta,
     required super.data,
@@ -57,7 +57,7 @@ class CursorPaginationRefetching extends CursorPagination {
 // 리스트 제일 아래에 도착하여
 // 추가 데이터를 요청해야 하는 상황
 // CursorPaginationLoading은 meta속성이 없어서 이 클래스를 사용하고 상태를 표현
-class CursorPaginationFetchingMore extends CursorPagination {
+class CursorPaginationFetchingMore<T> extends CursorPagination<T> {
   CursorPaginationFetchingMore({
     required super.meta,
     required super.data,
