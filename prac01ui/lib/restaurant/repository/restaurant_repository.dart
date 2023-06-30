@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:prac01ui/common/const/data.dart';
 import 'package:prac01ui/common/dio/dio.dart';
 import 'package:prac01ui/common/model/cursor_pagination_model.dart';
+import 'package:prac01ui/common/model/cursor_pagination_params_model.dart';
 import 'package:prac01ui/restaurant/model/restaurant_detail_model.dart';
 import 'package:prac01ui/restaurant/model/restaurant_model.dart';
 import 'package:retrofit/retrofit.dart';
@@ -31,7 +32,10 @@ abstract class RestaurantRepository {
   @Headers({
     'accessToken': 'true',
   })
-  Future<CursorPagination<RestaurantModel>> paginate();
+  Future<CursorPagination<RestaurantModel>> paginate({
+    @Queries() CursorPaginationParamsModel? paginationParams =
+        const CursorPaginationParamsModel(),
+  });
 
   // retrofit에서는 :id가 아니라 {id}로 변수를 사용합니다.
   // http://$ip/restaurant/:id
